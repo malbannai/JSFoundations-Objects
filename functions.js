@@ -11,7 +11,7 @@
  * - returns the name of the channel
  ****************************************************************/
 function getChannelName(channel) {
-  // Your code here
+  return channel.name;
 }
 
 /**************************************************************
@@ -20,7 +20,7 @@ function getChannelName(channel) {
  * - returns the number of videos that channel has
  ****************************************************************/
 function numberOfVideos(channel) {
-  // Your code here
+  return channel.videos.length;
 }
 
 /**************************************************************
@@ -33,8 +33,15 @@ function numberOfVideos(channel) {
  * BONUS: use iteration method `.some()`
  ****************************************************************/
 function channelHasVideo(videoTitle, channel) {
-  // Your code here
+  const result = channel.videos.some((video) => video.title == videoTitle);
+  return result;
 }
+// Trail 1:
+// let Tholder = [];
+// Tholder = channel.videos.map((object) => {
+//   return object.title == videoTitle;
+// });
+// return Tholder.includes(true);
 
 /**************************************************************
  * getChannelByName(channelName, channels):
@@ -45,8 +52,16 @@ function channelHasVideo(videoTitle, channel) {
  * BONUS: use iteration method `.find()`
  ****************************************************************/
 function getChannelByName(channelName, channels) {
-  // Your code here
+  let found = channels.find((channel) => channel.name == channelName);
+  return found !== null ? found : undefined;
 }
+// Trail 1:
+// let channelHolder = "";
+// for (let i = 0; i < channels.length; i++) {
+//   if (channels[i].name == channelName) channelHolder = channels[i];
+// }
+// if (channelHolder == "") return undefined;
+// return channelHolder;
 
 /**************************************************************
  * getChannelByVideoTitle(videoTitle, channels):
@@ -57,8 +72,32 @@ function getChannelByName(channelName, channels) {
  * BONUS: use iteration methods `.find()` and `.some()`
  ****************************************************************/
 function getChannelByVideoTitle(videoTitle, channels) {
-  // Your code here
+  // channels is an array of objects
+  // one object has name,description and videos
+  // videos is an array of objects
+  // object in vedios have titel, duration
+
+  // channels (array) -> channel (object) -> vedios (array) -> vedio (object) -> title
+
+  let titleHolder = null;
+  channels.find((channel) =>
+    channel.videos.some((video) =>
+      video.title === videoTitle
+        ? (titleHolder = channel)
+        : (titleHolder = undefined)
+    )
+  );
+  return titleHolder;
 }
+
+// Trail 1:
+// let channelHolder = null;
+// for (let i = 0; i < channels.length; i++) {
+//   channels[i].videos.map((element) => {
+//     if (element.title == videoTitle) channelHolder = channels[i];
+//   });
+// }
+// return channelHolder !== null ? channelHolder : undefined;
 
 /**************************************************************
  * searchChannels(query, channels):
@@ -69,8 +108,24 @@ function getChannelByVideoTitle(videoTitle, channels) {
  * Hint: use string method `.includes()` and iteration method `.filter()`
  ****************************************************************/
 function searchChannels(query, channels) {
-  // Your code here
+  // channels (array) -> channel (object) -> vedios (array) -> vedio (object) -> title
+  let queryHolder = channels.filter(
+    (channel) =>
+      channel.name.includes(query) || channel.description.includes(query)
+  );
+  return queryHolder;
 }
+//Trail 1:
+// let channelHolder = [];
+// for (let i = 0; i < channels.length; i++) {
+//   if (
+//     channels[i].name.includes(query) ||
+//     channels[i].description.includes(query)
+//   )
+//     channelHolder.push(channels[i]);
+// }
+
+// return channelHolder;
 
 module.exports = {
   getChannelName,
